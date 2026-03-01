@@ -3,6 +3,7 @@ package com.example.jobHunter.contact.controller;
 
 import com.example.jobHunter.contact.service.IcontactService;
 import com.example.jobHunter.dto.ContactRequestDto;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class ContactController {
     private final IcontactService icontactService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> savecontact(@RequestBody ContactRequestDto contactRequestDto) {
+    public ResponseEntity<String> savecontact(@RequestBody  @Valid ContactRequestDto contactRequestDto) {
    boolean issaved= icontactService.saveContacts(contactRequestDto);
         System.out.println(issaved);
         System.out.println(contactRequestDto);
