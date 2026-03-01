@@ -1,10 +1,11 @@
-package com.example.jobHunter.service.impl;
+package com.example.jobHunter.company.service.impl;
 
 
 import com.example.jobHunter.Entity.Company;
 import com.example.jobHunter.dto.CompanyDto;
-import com.example.jobHunter.service.impl.ICompanyService;
-import com.example.jobHunter.repository.CompanyRepository;
+
+import com.example.jobHunter.company.repository.CompanyRepository;
+import com.example.jobHunter.company.service.ICompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.jobHunter.service.impl;
+package com.example.jobHunter.company.service;
 
 import com.example.jobHunter.dto.CompanyDto;
 
