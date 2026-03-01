@@ -4,6 +4,7 @@ import com.example.jobHunter.Entity.Contact;
 import com.example.jobHunter.contact.repository.ContactRepository;
 import com.example.jobHunter.contact.service.IcontactService;
 import com.example.jobHunter.dto.ContactRequestDto;
+import com.example.jobHunter.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class ContactServiceImpl implements IcontactService {
     public ContactRequestDto getlatest() {
         Contact contact = contactRepository
                 .findTopByOrderByCreatedAtDesc()
-                .orElseThrow(() -> new RuntimeException("No contacts found"));
+                .orElseThrow(() -> new ResourceNotFoundException("No contacts found"));
 return transformToDto(contact);
 
     }
