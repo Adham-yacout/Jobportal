@@ -33,11 +33,7 @@ public class ContactController {
 
     @GetMapping("/latest")
     public  ResponseEntity<?> returnlatestcontact(){
-        try {
-            ContactRequestDto contactRequestDto = icontactService.getlatest();
-            return ResponseEntity.ok(contactRequestDto);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No records found");
-        }
+        ContactRequestDto contactRequestDto = icontactService.getlatest();
+        return ResponseEntity.ok(contactRequestDto);
     }
 }
