@@ -23,10 +23,6 @@ public class ContactServiceImpl implements IcontactService {
             boolean result=false;
 
         Contact contact = contactRepository.save(Transformtocontact(contactRequestDto));
-        System.out.println("save contacts");
-        System.out.println(contact);
-        System.out.println(contact.getId());
-        System.out.println("save contacts");
         if (contact !=null && contact.getId()!=null){
             contactRepository.save(contact);
             result=true;
@@ -47,12 +43,7 @@ return transformToDto(contact);
     {
         Contact contact= new Contact();
         BeanUtils.copyProperties(contactRequestDto, contact);
-        contact.setCreatedAt(Instant.now());
-        contact.setCreatedBy("System");
         contact.setStatus("NEW");
-        System.out.println("transformtocontact");
-        System.out.println(contact);
-        System.out.println("transformtocontact");
         return  contact;
     }
 
