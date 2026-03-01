@@ -1,4 +1,4 @@
-package com.example.jobHunter.repository;
+package com.example.jobHunter.company.repository;
 
 
 import com.example.jobHunter.Entity.Company;
