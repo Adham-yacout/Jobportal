@@ -17,7 +17,8 @@ import java.util.List;
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/webjars/**",
-                "/v3/api-docs"
+                "/v3/api-docs",
+                "/auth/login/public"
         );
     }
 
