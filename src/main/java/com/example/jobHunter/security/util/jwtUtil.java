@@ -25,9 +25,11 @@ public class jwtUtil {
         String secret = env.getProperty(ApplicationConstants.JWT_SECRET_KEY,
                 ApplicationConstants.JWT_SECRET_DEFAULT_VALUE);
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        var fetchedUser = (User) authentication.getPrincipal();
+        var fetchedUser = (JobPortalUser) authentication.getPrincipal();
         jwtToken = Jwts.builder().issuer("Job Portal").subject("JWT Token")
-                .claim("username", fetchedUser.getUsername())
+                .claim("name", fetchedUser.getName())
+                .claim("email", fetchedUser.getEmail())
+                .claim("mobile",fetchedUser.getMobileNumber())
                 .claim("roles", authentication.getAuthorities().stream().map(
                         GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                 .issuedAt(new java.util.Date())
