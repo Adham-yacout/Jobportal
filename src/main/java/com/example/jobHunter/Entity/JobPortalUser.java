@@ -13,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "users")
-public class JobPortalUser {
+public class JobPortalUser extends  BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -26,7 +26,7 @@ public class JobPortalUser {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Size(max = 500)
@@ -35,7 +35,7 @@ public class JobPortalUser {
     private String passwordHash;
 
     @Size(max = 20)
-    @Column(name = "mobile_number", length = 20)
+    @Column(name = "mobile_number", length = 20,unique = true)
     private String mobileNumber;
 
     @NotNull

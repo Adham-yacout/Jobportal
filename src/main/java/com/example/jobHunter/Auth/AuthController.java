@@ -4,7 +4,10 @@ package com.example.jobHunter.Auth;
 import com.example.jobHunter.Entity.JobPortalUser;
 import com.example.jobHunter.dto.LoginRequestDto;
 import com.example.jobHunter.dto.LoginResponseDto;
+import com.example.jobHunter.dto.RegisterRequestDto;
 import com.example.jobHunter.dto.UserDto;
+import com.example.jobHunter.job.repository.JobPortalUserRepository;
+import com.example.jobHunter.job.repository.RoleRepository;
 import com.example.jobHunter.security.util.jwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -13,12 +16,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.authentication.password.CompromisedPasswordDecision;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,10 +34,10 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final jwtUtil jwtUtil;
-//    private final PasswordEncoder passwordEncoder;
-//    private final JobPortalUserRepository jobPortalUserRepository;
-//    private final RoleRepository roleRepository;
-//    private final CompromisedPasswordChecker compromisedPasswordChecker;
+  private final PasswordEncoder passwordEncoder;
+   private final JobPortalUserRepository jobPortalUserRepository;
+  private final RoleRepository roleRepository;
+   private final CompromisedPasswordChecker compromisedPasswordChecker;
 
 
 
@@ -52,6 +59,23 @@ public class AuthController {
             return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                     String.valueOf(ex));
         }
+
+    }
+
+    @PostMapping(value = "/register/public")
+    public ResponseEntity<String> apiRegister(@RequestBody RegisterRequestDto registerRequestDto) {
+        CompromisedPasswordDecision decision=compromisedPasswordChecker.check(registerRequestDto.password());
+        if (decision.isCompromised()){
+            return ResponseEntity.status(
+                    HttpStatus.BAD_REQUEST).body("Choose a strong password this was compromised before");
+        }
+        JobPortalUser jobPortalUser = new JobPortalUser();
+        BeanUtils.copyProperties(registerRequestDto,jobPortalUser);
+        jobPortalUser.setPasswordHash(passwordEncoder.encode(registerRequestDto.password()));
+        roleRepository.findById(1L).ifPresent(jobPortalUser::setRole);
+        jobPortalUserRepository.save(jobPortalUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("User Registered successfully");
 
     }
 
