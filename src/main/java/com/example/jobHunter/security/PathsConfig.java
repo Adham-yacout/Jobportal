@@ -18,7 +18,8 @@ import java.util.List;
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/v3/api-docs",
-                "/auth/login/public"
+                "/auth/login/public",
+                "/auth/register/public"
         );
     }
 

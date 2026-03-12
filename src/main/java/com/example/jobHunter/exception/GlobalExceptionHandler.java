@@ -1,6 +1,8 @@
 package com.example.jobHunter.exception;
 
 import com.example.jobHunter.dto.ErrorResponseDto;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -59,6 +61,25 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> handleSqlException(DataIntegrityViolationException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+        String message = ex.getMostSpecificCause().getMessage();
+
+        if (message.contains("email")) {
+            errors.put("email", "Email already exists");
+        }
+        else if (message.contains("mobile_number")) {
+            errors.put("mobileNumber", "Mobile number already exists");
+        }
+        else {
+            errors.put("error", "Database constraint violation");
+        }
+
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }
