@@ -1,6 +1,7 @@
 package com.example.jobHunter.Auth;
 
 
+import com.example.jobHunter.Entity.Job;
 import com.example.jobHunter.Entity.JobPortalUser;
 import com.example.jobHunter.dto.LoginRequestDto;
 import com.example.jobHunter.dto.LoginResponseDto;
@@ -49,6 +50,9 @@ public class AuthController {
 
             String jwtToken = jwtUtil.generateJwtToken(resultAuthentication);
             var userDto = new UserDto();
+            var loggedInUser = (JobPortalUser) resultAuthentication.getPrincipal();
+            BeanUtils.copyProperties(loggedInUser,userDto);
+            userDto.setRole(loggedInUser.getRole().getName());
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new LoginResponseDto(HttpStatus.OK.getReasonPhrase(),
                             userDto, jwtToken));

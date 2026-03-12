@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
@@ -39,6 +40,8 @@ public class JobPortalSecurityConfig {
     @Qualifier("securedPaths")
     private final List<String> securedPaths;
 
+
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
 
@@ -60,21 +63,10 @@ public class JobPortalSecurityConfig {
 
     }
 
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        var user1 = User.builder().username("madan")
-                .password("$2a$10$viS6XrG2FpiZXPQgP7.rQeBrG6TauRaybxsaNjNi.WCLCdIURzZCq")
-                .roles("USER").build();
-        var user2 = User.builder().username("admin")
-                .password("$2a$10$CurDmUEPRQsX5AhEN1NSV.ejUteU0S3dj5XfjxOjaVFhCCTOuj8WG")
-                .roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        var autheticationProvider = new DaoAuthenticationProvider(userDetailsService());
-        autheticationProvider.setPasswordEncoder(passwordEncoder());
-        return new ProviderManager(autheticationProvider);
+    public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
+        return new ProviderManager(authenticationProvider);
     }
 
     @Bean
