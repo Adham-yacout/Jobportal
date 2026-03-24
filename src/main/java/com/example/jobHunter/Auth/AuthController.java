@@ -68,11 +68,7 @@ public class AuthController {
 
     @PostMapping(value = "/register/public")
     public ResponseEntity<String> apiRegister(@RequestBody RegisterRequestDto registerRequestDto) {
-        CompromisedPasswordDecision decision=compromisedPasswordChecker.check(registerRequestDto.password());
-        if (decision.isCompromised()){
-            return ResponseEntity.status(
-                    HttpStatus.BAD_REQUEST).body("Choose a strong password this was compromised before");
-        }
+
         JobPortalUser jobPortalUser = new JobPortalUser();
         BeanUtils.copyProperties(registerRequestDto,jobPortalUser);
         jobPortalUser.setPasswordHash(passwordEncoder.encode(registerRequestDto.password()));
@@ -82,6 +78,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body("User Registered successfully");
 
     }
+
+
+
 
     private ResponseEntity<LoginResponseDto> buildErrorResponse(HttpStatus status,
                                                                 String message) {
