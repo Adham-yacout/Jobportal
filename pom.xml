@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>jobHunter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>jobHunter</name>
 	<description>Job hunter website</description>
 	<url/>
@@ -20,6 +21,9 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>logs</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
