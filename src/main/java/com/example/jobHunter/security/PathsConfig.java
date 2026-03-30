@@ -30,4 +30,16 @@ import java.util.List;
                 "/api/**"
         );
     }
+
+    @Bean(name = "adminPaths")
+    List<String> adminPaths() {
+        return List.of(
+            "/api/contacts/admin",
+            "/api/contacts/page/admin"
+        );
+    }
+
+
+
+
 }
