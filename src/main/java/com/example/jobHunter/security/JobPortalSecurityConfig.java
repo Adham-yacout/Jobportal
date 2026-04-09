@@ -52,7 +52,7 @@ public class JobPortalSecurityConfig {
                 })
                 .addFilterBefore(new JwtTokenValidatorFilter(publicPaths), BasicAuthenticationFilter.class)
                 .formLogin(flc -> flc.disable())
-                .httpBasic(withDefaults())
+                .httpBasic(httpBasic -> httpBasic.disable())
                 .build();
 //        return  http.authorizeHttpRequests((
 //requests) -> requests.anyRequest().authenticated())
