@@ -21,6 +21,9 @@ import java.util.List;
                 "/auth/login/public",
                 "/auth/register/public",
                 "/todos/**"
+                "/auth/register/public",
+                "/swagger-ui/index.html",
+                "/actuator/**"
         );
     }
 
