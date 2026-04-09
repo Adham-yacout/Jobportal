@@ -19,7 +19,8 @@ import java.util.List;
                 "/webjars/**",
                 "/v3/api-docs",
                 "/auth/login/public",
-                "/auth/register/public"
+                "/auth/register/public",
+                "/todos/**"
         );
     }
 
