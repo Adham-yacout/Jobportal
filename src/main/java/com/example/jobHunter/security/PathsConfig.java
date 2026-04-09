@@ -13,12 +13,14 @@ import java.util.List;
                 "/api/auth/login",
                 "/swagger-ui.html",
                 "/swagger-ui/**",
-                "/v3/api-docs/**",
+                "/api/v3/api-docs/**",
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/v3/api-docs",
                 "/auth/login/public",
+                "/auth/register/public",
+                "/todos/**"
                 "/auth/register/public",
                 "/swagger-ui/index.html",
                 "/actuator/**"
